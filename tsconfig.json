@@ -1,0 +1,11 @@
+{
+  "compilerOptions": {
+    "sourceMap": true,
+    "target": "es5",
+    "outDir": ".out",
+    "lib": ["es5", "es6", "dom"],
+    "jsx": "react",
+    "allowSyntheticDefaultImports": true,
+    "experimentalDecorators": true
+  }
+}
