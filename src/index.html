@@ -7,40 +7,27 @@
         body { margin: 0; }
         canvas {
              width: 100vw;
-             height: 100vh;
+             height: 95vh;
              display: block;
+             box-sizing: border-box;
          }
+        .buttons {
+            display: flex;
+            flex-direction: row;
+        }
+        button {
+            color: #fff;
+            background-color: #5bc0de;
+            border-color: #46b8da;
+        }
     </style>
-    <script id="2d-vertex-shader" type="notjs">
-
-          attribute vec2 a_position;
-
-          uniform vec2 u_resolution;
-
-          void main() {
-            vec2 zeroToOne = a_position / u_resolution;
-
-            vec2 zeroToTwo = zeroToOne * 2.0;
-
-            vec2 clipSpace = zeroToTwo - 1.0;
-
-            gl_Position = vec4(clipSpace * vec2(1, -1), 0, 1);
-          }
-    </script>
-
-    <script id="2d-fragment-shader" type="notjs">
-          precision mediump float;
-
-          uniform vec4 u_color;
-
-          void main() {
-            gl_FragColor = u_color;
-          }
-
-    </script>
 </head>
 <body>
-<canvas id="canvas" width="1000" height="500" style="border: 1px solid black"></canvas>
+<div class="buttons">
+    <button id="rectangles">Rectangles</button>
+    <button id="coloredRectangles">Colored Rectangles</button>
+</div>
+<canvas id="canvas" style="border: 1px solid black"></canvas>
 
 </body>
 </html>

@@ -1,10 +1,4 @@
-
-export interface GlColor {
-    red: number,
-    green: number,
-    blue: number,
-    opacity: number
-}
+import { GlColor } from '../model/color';
 
 export const convertHexToClColor = (hex: string, opacity: number): GlColor => {
     hex = hex.replace('#','');

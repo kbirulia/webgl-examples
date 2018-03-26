@@ -1,24 +1,16 @@
-import { GlController } from './GlController';
-import { createProgramFromScripts, ShaderSourceMap, ShaderType } from './utils/createProgramFromScripts';
-import { getGLRenderingContext } from './utils/getGLRenderingContext';
-import { Renderer } from './render/Renderer';
 import { rectangles } from './examples/rectangles';
+import { coloredRectangles } from './examples/coloredRectangles';
 
-const canvas = <HTMLCanvasElement>document.getElementById('canvas');
+const examples = {
+    rectangles,
+    coloredRectangles
+};
 
-const shaders: ShaderSourceMap = new Map();
-shaders.set(ShaderType.VERTEX_SHADER, '2d-vertex-shader');
-shaders.set(ShaderType.FRAGMENT_SHADER, '2d-fragment-shader');
+Array.from(document.getElementsByTagName('button')).forEach(button => {
+    button.addEventListener('click', examples[button.id])
+});
 
-const gl = getGLRenderingContext(canvas);
-
-const program = createProgramFromScripts(gl, shaders);
-
-const glController = new GlController(gl, program);
-
-const renderer = new Renderer(glController);
-
-rectangles(gl, renderer);
+rectangles();
 
 
 
