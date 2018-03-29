@@ -32,7 +32,6 @@ export const gradientRectangles = (e?: Event): void  => {
     const offset = 0;
 
     createScene();
-    gl.uniform2f(resolutionULocation, gl.canvas.width, gl.canvas.height);
 
     gl.vertexAttribPointer(positionALocation, sizePosition, type, normalize, stride, offset);
 
@@ -40,21 +39,21 @@ export const gradientRectangles = (e?: Event): void  => {
     const width  =  200;
     const height = 200;
     const stepColor = 255 / (amount + 1);
+    const positionBuffer = gl.createBuffer();
+    const colorBuffer = gl.createBuffer();
 
     for (let i = 0, color = 240; i < amount; ++i, color -= stepColor) {
-        createBuffers(i, color);
+        initBuffers(i, color);
         gl.drawArrays(gl.TRIANGLES, 0, 6);
     }
 
-    function createBuffers(num: number, color: number): void {
-        const positionBuffer = gl.createBuffer();
+    function initBuffers(num: number, color: number): void {
         gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
 
         const {x, y} = getCoords(num);
         setGeometry( x, y, width, height);
         gl.vertexAttribPointer(positionALocation, sizePosition, type, normalize, stride, offset);
 
-        const colorBuffer = gl.createBuffer();
         gl.bindBuffer(gl.ARRAY_BUFFER, colorBuffer);
         const glColor = convertRGBAToClColor(0, color, 0, 1);
         setColors(glColor);
@@ -70,6 +69,8 @@ export const gradientRectangles = (e?: Event): void  => {
 
         gl.clearColor(0, 0, 0, 0);
         gl.clear(gl.COLOR_BUFFER_BIT);
+
+        gl.uniform2f(resolutionULocation, gl.canvas.width, gl.canvas.height);
     }
 
     function getCoords(num: number): Coordinates2D {

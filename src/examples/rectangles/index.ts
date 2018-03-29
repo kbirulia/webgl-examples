@@ -26,9 +26,7 @@ export const rectangles = (e?: Event) => {
     gl.enableVertexAttribArray(positionALocation);
 
     createScene();
-    gl.uniform2f(resolutionULocation, gl.canvas.width, gl.canvas.height);
 
-    //for vertexAttribPointer
     const size = 2;
     const type = gl.FLOAT;
     const normalize = false;
@@ -39,15 +37,14 @@ export const rectangles = (e?: Event) => {
     const width  =  200;
     const height = 200;
     const stepColor = 255 / (amount + 1);
+    const positionBuffer = gl.createBuffer();
 
     for (let i = 0, color = 240; i < amount; ++i, color -= stepColor) {
-        createBuffer(i, color);
+        initBuffer(i, color);
         gl.drawArrays(gl.TRIANGLES, 0, 6);
     }
 
-    function createBuffer(num: number, color: number): void {
-        const positionBuffer = gl.createBuffer();
-
+    function initBuffer(num: number, color: number): void {
         gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
         const {x, y} = getCoords(num);
         setGeometry(x, y);
@@ -67,6 +64,8 @@ export const rectangles = (e?: Event) => {
 
         gl.clearColor(0, 0, 0, 0);
         gl.clear(gl.COLOR_BUFFER_BIT);
+
+        gl.uniform2f(resolutionULocation, gl.canvas.width, gl.canvas.height);
     }
 
     function setGeometry(x: number, y: number): void {
