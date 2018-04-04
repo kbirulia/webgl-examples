@@ -20,6 +20,15 @@ module.exports = env => ({
                     options: {
                         transpileOnly: true // IMPORTANT! use transpileOnly mode to speed-up compilation
                     }
+                },
+                {
+                    test: /\.(png|jpg|gif)$/,
+                    use: [{
+                            loader: 'file-loader',
+                            options: {
+                                name: '[path][name].[ext]'
+                            }
+                        }]
                 }
             ]
         },

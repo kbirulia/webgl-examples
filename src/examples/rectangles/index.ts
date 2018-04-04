@@ -5,6 +5,7 @@ import { Coordinates2D } from '../../model/coordinates';
 import { resizeCanvasToDisplaySize } from '../../utils/resizeCanvasToDisplaySize';
 import { RectanglesShadersSource } from './shaderSources';
 import { markButtonAsActive } from '../../utils/markButtonAsActive';
+import { createNewEmptyScene } from '../../utils/createNewEmptyScene';
 
 export const rectangles = (e?: Event) => {
     e && markButtonAsActive(e.target as HTMLButtonElement);
@@ -25,7 +26,7 @@ export const rectangles = (e?: Event) => {
     gl.useProgram(program);
     gl.enableVertexAttribArray(positionALocation);
 
-    createScene();
+    createNewEmptyScene(gl, resolutionULocation);
 
     const size = 2;
     const type = gl.FLOAT;
@@ -55,17 +56,6 @@ export const rectangles = (e?: Event) => {
         gl.vertexAttribPointer(positionALocation, size, type, normalize, stride, offset);
 
         gl.drawArrays(gl.TRIANGLES, 0, 6);
-    }
-
-    function createScene(): void {
-        resizeCanvasToDisplaySize(gl.canvas);
-
-        gl.viewport(0, 0, gl.canvas.width, gl.canvas.height);
-
-        gl.clearColor(0, 0, 0, 0);
-        gl.clear(gl.COLOR_BUFFER_BIT);
-
-        gl.uniform2f(resolutionULocation, gl.canvas.width, gl.canvas.height);
     }
 
     function setGeometry(x: number, y: number): void {

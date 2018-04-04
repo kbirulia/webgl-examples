@@ -5,6 +5,7 @@ import { resizeCanvasToDisplaySize } from '../../utils/resizeCanvasToDisplaySize
 import { convertRGBAToClColor } from '../../utils/colorConverters';
 import { Coordinates2D } from '../../model/coordinates';
 import { markButtonAsActive } from '../../utils/markButtonAsActive';
+import { createNewEmptyScene } from '../../utils/createNewEmptyScene';
 
 export const gradientRectangles = (e?: Event): void  => {
     e && markButtonAsActive(e.target as HTMLButtonElement);
@@ -31,7 +32,7 @@ export const gradientRectangles = (e?: Event): void  => {
     const stride = 0;
     const offset = 0;
 
-    createScene();
+    createNewEmptyScene(gl, resolutionULocation);
 
     gl.vertexAttribPointer(positionALocation, sizePosition, type, normalize, stride, offset);
 
@@ -59,18 +60,6 @@ export const gradientRectangles = (e?: Event): void  => {
         setColors(glColor);
         gl.vertexAttribPointer(colorALocation, sizeColor, type, normalize, stride, offset);
 
-    }
-
-
-    function createScene(): void {
-        resizeCanvasToDisplaySize(gl.canvas);
-
-        gl.viewport(0, 0, gl.canvas.width, gl.canvas.height);
-
-        gl.clearColor(0, 0, 0, 0);
-        gl.clear(gl.COLOR_BUFFER_BIT);
-
-        gl.uniform2f(resolutionULocation, gl.canvas.width, gl.canvas.height);
     }
 
     function getCoords(num: number): Coordinates2D {
